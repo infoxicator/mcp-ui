@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [
     react({
-      jsxRuntime: 'classic',
+      jsxRuntime: 'automatic',
     }),
     dts({
       insertTypesEntry: true,
@@ -14,13 +14,6 @@ export default defineConfig({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any,
   ],
-  resolve: {
-    alias: {
-      // Fix jsx-runtime resolution for React 16
-      'react/jsx-runtime': path.resolve(__dirname, 'node_modules/react/jsx-runtime.js'),
-      'react/jsx-dev-runtime': path.resolve(__dirname, 'node_modules/react/jsx-dev-runtime.js'),
-    },
-  },
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
