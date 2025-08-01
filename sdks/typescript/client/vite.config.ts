@@ -1,17 +1,26 @@
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import path from 'path';
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      jsxRuntime: 'classic',
+    }),
     dts({
       insertTypesEntry: true,
       exclude: ['**/__tests__/**', '**/*.test.ts', '**/*.spec.ts'],
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any,
   ],
+  resolve: {
+    alias: {
+      // Fix jsx-runtime resolution for React 16
+      'react/jsx-runtime': path.resolve(__dirname, 'node_modules/react/jsx-runtime.js'),
+      'react/jsx-dev-runtime': path.resolve(__dirname, 'node_modules/react/jsx-dev-runtime.js'),
+    },
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
