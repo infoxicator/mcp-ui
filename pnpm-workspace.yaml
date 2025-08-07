@@ -1,5 +1,11 @@
 packages:
-  # all packages in subdirs of sdks/typescript/
-  - 'sdks/typescript/*'
-  - 'examples/*'
-  - 'docs'
+  - sdks/typescript/*
+  - examples/*
+  - docs
+onlyBuiltDependencies:
+  - '@swc/core'
+  - '@tailwindcss/oxide'
+  - esbuild
+  - sharp
+  - unrs-resolver
+  - workerd

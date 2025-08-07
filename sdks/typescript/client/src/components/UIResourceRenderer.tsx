@@ -3,6 +3,7 @@ import { ResourceContentType, UIActionResult } from '../types';
 import { HTMLResourceRenderer, HTMLResourceRendererProps } from './HTMLResourceRenderer';
 import { RemoteDOMResourceProps, RemoteDOMResourceRenderer } from './RemoteDOMResourceRenderer';
 import { basicComponentLibrary } from '../remote-dom/component-libraries/basic';
+import { ModuleFederationResourceRenderer } from './ModuleFederationResourceRenderer';
 
 export type UIResourceRendererProps = {
   resource: Partial<Resource>;
@@ -25,6 +26,9 @@ function getContentType(resource: Partial<Resource>): ResourceContentType | unde
   }
   if (resource.mimeType?.startsWith('application/vnd.mcp-ui.remote-dom')) {
     return 'remoteDom';
+  }
+  if (resource.mimeType?.startsWith('application/vnd.mcp-ui.module-federation')) {
+    return 'moduleFederation';
   }
 }
 
@@ -56,6 +60,9 @@ export const UIResourceRenderer = (props: UIResourceRendererProps) => {
           {...remoteDomProps}
         />
       );
+    case 'moduleFederation': {
+      return <ModuleFederationResourceRenderer resource={resource} onUIAction={onUIAction} />;
+    }
     default:
       return <p className="text-red-500">Unsupported resource type.</p>;
   }
