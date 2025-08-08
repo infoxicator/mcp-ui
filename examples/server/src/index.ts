@@ -329,6 +329,47 @@ export class MyMCP extends McpAgent {
         };
       },
     );
+
+    this.server.tool(
+      'show_module_federation',
+      'Shows a module federation component',
+      async () => {
+        const resourceBlock1 = createUIResource({
+          uri: `ui://module-federation/${Date.now()}` as `ui://${string}`,
+          encoding: 'text',
+          content: {
+            type: 'moduleFederation',
+            remoteName: 'remote_test',
+            remoteEntry: 'http://localhost:3000/mf-manifest.json',
+            framework: 'react',
+          },
+        });
+        const resourceBlock2 = createUIResource({
+          uri: `ui://module-federation/${Date.now()}` as `ui://${string}`,
+          encoding: 'text',
+          content: {
+            type: 'moduleFederation',
+            remoteName: 'mf_vue',
+            remoteEntry: 'http://localhost:3001/mf-manifest.json',
+            framework: 'vue',
+          },
+        });
+          // const resourceBlock3 = createUIResource({
+          //   uri: `ui://module-federation/${Date.now()}` as `ui://${string}`,
+          //   encoding: 'text',
+          //   content: {
+          //     type: 'moduleFederation',
+          //     remoteName: 'mf_svelte',
+          //     remoteEntry: 'http://localhost:3003/mf-manifest.json',
+          //     framework: 'svelte',
+          //   },
+          // });
+
+        return {
+          content: [resourceBlock1, resourceBlock2],
+        };
+      },
+    );
   }
 }
 

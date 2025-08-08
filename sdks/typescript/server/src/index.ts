@@ -92,6 +92,17 @@ export function createUIResource(options: CreateUIResourceOptions): UIResource {
       );
     }
     mimeType = `application/vnd.mcp-ui.remote-dom+javascript; framework=${options.content.framework}`;
+  } else if (options.content.type === 'moduleFederation') {
+    if (!options.uri.startsWith('ui://')) {
+      throw new Error("MCP-UI SDK: URI must start with 'ui://' when content.type is 'moduleFederation'.");
+    }
+    if (typeof options.content.remoteName !== 'string' || typeof options.content.remoteEntry !== 'string') {
+      throw new Error(
+        "MCP-UI SDK: content.remoteName and content.remoteEntry must be provided as strings when content.type is 'moduleFederation'.",
+      );
+    }
+    actualContentString = `${options.content.remoteName}@${options.content.remoteEntry}`;
+    mimeType = `application/vnd.mcp-ui.module-federation; framework=${options.content.framework}`;
   } else {
     // This case should ideally be prevented by TypeScript's discriminated union checks
     const exhaustiveCheckContent: never = options.content;
