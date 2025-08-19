@@ -186,7 +186,9 @@ export class MyMCP extends McpAgent {
       },
     );
 
-    this.server.tool('show_remote_dom_react', 'Shows a react remote-dom component', async () => {
+    this.server.tool('show_remote_dom_react', 'Shows a react remote-dom component', 
+      { framework: z.enum(['react', 'webcomponents']).optional() },
+      async () => {
       const resourceBlock = createUIResource({
         uri: `ui://remote-dom-react/${Date.now()}` as `ui://${string}`,
         encoding: 'text',
@@ -333,14 +335,15 @@ export class MyMCP extends McpAgent {
     this.server.tool(
       'show_module_federation',
       'Shows a module federation component',
-      async () => {
+      { framework: z.enum(['react', 'vue', 'svelte', 'solid', 'angular']).optional() },
+      async ({ framework }) => {
         const resourceBlock1 = createUIResource({
           uri: `ui://module-federation/${Date.now()}` as `ui://${string}`,
           encoding: 'text',
           content: {
             type: 'moduleFederation',
-            remoteName: 'remote_test',
-            remoteEntry: 'http://localhost:3000/mf-manifest.json',
+            remoteName: 'mf_react',
+            remoteEntry: 'https://mcp-ui-example-remotes.vercel.app/mf_react/mf-manifest.json',
             framework: 'react',
           },
         });
@@ -350,23 +353,68 @@ export class MyMCP extends McpAgent {
           content: {
             type: 'moduleFederation',
             remoteName: 'mf_vue',
-            remoteEntry: 'http://localhost:3001/mf-manifest.json',
+            remoteEntry: 'https://mcp-ui-example-remotes.vercel.app/mf_vue/mf-manifest.json',
             framework: 'vue',
           },
         });
-          // const resourceBlock3 = createUIResource({
-          //   uri: `ui://module-federation/${Date.now()}` as `ui://${string}`,
-          //   encoding: 'text',
-          //   content: {
-          //     type: 'moduleFederation',
-          //     remoteName: 'mf_svelte',
-          //     remoteEntry: 'http://localhost:3003/mf-manifest.json',
-          //     framework: 'svelte',
-          //   },
-          // });
+          const resourceBlock3 = createUIResource({
+            uri: `ui://module-federation/${Date.now()}` as `ui://${string}`,
+            encoding: 'text',
+            content: {
+              type: 'moduleFederation',
+              remoteName: 'mf_svelte',
+              remoteEntry: 'https://mcp-ui-example-remotes.vercel.app/mf_svelte/mf-manifest.json',
+              framework: 'svelte',
+            },
+          });
+          const resourceBlock4 = createUIResource({
+            uri: `ui://module-federation/${Date.now()}` as `ui://${string}`,
+            encoding: 'text',
+            content: {
+              type: 'moduleFederation',
+              remoteName: 'mf_solid',
+              remoteEntry: 'https://mcp-ui-example-remotes.vercel.app/mf_solid/mf-manifest.json',
+              framework: 'solid',
+            },
+          });
+          const resourceBlock5 = createUIResource({
+            uri: `ui://module-federation/${Date.now()}` as `ui://${string}`,
+            encoding: 'text',
+            content: {
+              type: 'moduleFederation',
+              remoteName: 'mfe1',
+              remoteEntry: 'https://mcp-ui-example-remotes.vercel.app/angular_mfe1/browser/remoteEntry.js',
+              framework: 'angular',
+            },
+          });
 
+        if (framework === 'react') {
+          return {
+            content: [resourceBlock1],
+          };
+        }
+        if (framework === 'vue') {
+          return {
+            content: [resourceBlock2],
+          };
+        }
+        if (framework === 'svelte') {
+          return {
+            content: [resourceBlock3],
+          };
+        }
+        if (framework === 'solid') {
+          return {
+            content: [resourceBlock4],
+          };
+        }
+        if (framework === 'angular') {
+          return {
+            content: [resourceBlock5],
+          };
+        }
         return {
-          content: [resourceBlock1, resourceBlock2],
+          content: [resourceBlock1, resourceBlock2, resourceBlock3, resourceBlock4, resourceBlock5],
         };
       },
     );

@@ -242,8 +242,8 @@ importers:
   examples/server:
     dependencies:
       '@mcp-ui/server':
-        specifier: ^5.2.0
-        version: 5.2.0
+        specifier: file:../../sdks/typescript/server
+        version: link:../../sdks/typescript/server
       '@modelcontextprotocol/sdk':
         specifier: ^1.11.1
         version: 1.16.0

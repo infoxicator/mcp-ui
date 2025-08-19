@@ -9,7 +9,9 @@ export type MimeType =
   | 'application/vnd.mcp-ui.remote-dom+javascript; framework=webcomponents'
   | 'application/vnd.mcp-ui.module-federation; framework=react'
   | 'application/vnd.mcp-ui.module-federation; framework=svelte'
-  | 'application/vnd.mcp-ui.module-federation; framework=vue';
+  | 'application/vnd.mcp-ui.module-federation; framework=vue'
+  | 'application/vnd.mcp-ui.module-federation; framework=angular'
+  | 'application/vnd.mcp-ui.module-federation; framework=solid';
 
 export type HTMLTextContent = {
   uri: URI;
@@ -37,7 +39,7 @@ export type ResourceContentPayload =
       type: 'moduleFederation';
       remoteName: string;
       remoteEntry: string;
-      framework: 'react' | 'svelte' | 'vue';
+      framework: 'react' | 'svelte' | 'vue' | 'angular' | 'solid';
     };
 
 export interface CreateUIResourceOptions {
